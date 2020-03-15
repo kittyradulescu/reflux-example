@@ -19,10 +19,6 @@ const AllEventsConnector = createClass({
         this.setState(this.getCurrentState());
     },
 
-    updateStores() {
-        EventsActions.loadEventsDetails();
-    },
-
     getCurrentState() {
         return {
             eventsInformation: EventsStore.getEventsInformation(),
@@ -30,7 +26,7 @@ const AllEventsConnector = createClass({
     },
 
     componentDidMount() {
-        this.updateStores();
+        EventsActions.loadEventsDetails();
     },
 
     render() {

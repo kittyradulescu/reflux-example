@@ -1,5 +1,4 @@
 import EventsActions from "./eventsActions";
-import Event from "../components/model";
 
 const Reflux = require("reflux");
 const axios = require('axios');
@@ -18,7 +17,8 @@ const EventsStore = Reflux.createStore({
             const response = await axios.get('http://localhost:8080/allevents');
             this.updateEventsInformation(response.data);
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            this.setError();
         }
     },
 
@@ -27,18 +27,23 @@ const EventsStore = Reflux.createStore({
         this.trigger();
     },
 
-    updateEventsInformation(events: Event[]) {
+    updateEventsInformation(events) {
         state = "LOADED";
         eventsInformation = events;
         this.trigger();
     },
 
-    getEventsInformation(): Event[] {
+    getEventsInformation() {
         return eventsInformation;
     },
 
-    getState(): Object {
+    getState() {
         return state;
+    },
+
+    setError() {
+        state = "ERROR";
+        this.trigger();
     },
 
 });
